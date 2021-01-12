@@ -1,11 +1,11 @@
 import './App.css'
 import React from 'react'
-import axios from 'axios'
 import {InputWithLabel} from "./components/inputwithlabel"
 import {TableGrid} from "./components/table"
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'open-iconic/font/css/open-iconic-bootstrap.css'
 import {Spinner} from "react-bootstrap"
+import {API} from "./api"
 
 const API_ENDPOINT = "https://api.enye.tech/v1/challenge/records"
 
@@ -67,7 +67,7 @@ const App = () => {
   React.useEffect(() => {
     dispatchProfiles({type: 'profiles_fetch_init'})
 
-    axios.get(API_ENDPOINT).then(result => {
+    API.request(API_ENDPOINT).then(result => {
       dispatchProfiles({type: 'profiles_fetch_success', payload: result.data.records.profiles})
     }).catch(e => {
       dispatchProfiles({type: 'profiles_fetch_failure'})
@@ -80,13 +80,15 @@ const App = () => {
   }
 
   // filter through the result to select list with the search term before passing to the list component.
-  const searchedProfiles = profiles.data.filter(profile => {
+  const searchedProfiles = profiles.data.filter(profile =>{
     // check if isPayment filter is on and search by payement, otherwise search through name by default
-    if (filter === "Payement") {
+    if (filter === "Payment") {
       return profile.PaymentMethod.toLowerCase().includes(searchTerm.toLowerCase())
     } else if (filter === "Name") {
       return profile.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) || profile.LastName.toLowerCase().includes(searchTerm.toLowerCase())
 
+    } else {
+      return []
     }
   })
 
