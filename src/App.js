@@ -1,8 +1,9 @@
 import './App.css'
 import React from 'react'
 import axios from 'axios'
-import { InputWithLabel } from "./components/inputwithlabel"
-import { TableGrid } from "./components/table"
+import {InputWithLabel} from "./components/inputwithlabel"
+import {TableGrid} from "./components/table"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const API_ENDPOINT = "https://api.enye.tech/v1/challenge/records"
 
@@ -43,16 +44,22 @@ const profilesReducer = (state, action) => {
   }
 }
 
+//
+
 const App = () => {
   // state for search term
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '')
 
+  // state for filter
+  const [filter, setFilter] = React.useState("Name")
 
   // reducer
   const [profiles, dispatchProfiles] = React.useReducer(profilesReducer, {
     data: [],
     isLoading: false,
-    isError: false
+    isError: false,
+    isName: true,
+    isPayment: false
   })
 
   React.useEffect(() => {
@@ -70,20 +77,26 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
-
   // filter through the result to select list with the search term before passing to the list component.
-  const searchedProfiles = profiles.data.filter(profile => profile.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) || profile.LastName.toLowerCase().includes(searchTerm.toLowerCase()))
+  const searchedProfiles = profiles.data.filter(profile => {
+    // check if isPayment filter is on and search by payement, otherwise search through name by default
+    if (filter === "Payement") {
+      return profile.PaymentMethod.toLowerCase().includes(searchTerm.toLowerCase())
+    } else if (filter === "Name") {
+      return profile.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) || profile.LastName.toLowerCase().includes(searchTerm.toLowerCase())
+
+    }
+  })
 
   return (<div>
-    <h1>
-      Hello! Welcome to Enye records.</h1>
-    <InputWithLabel id="search" label="Search" value={searchTerm} onInputChange={handleSearch}/>
-    <br />
-    {profiles.isError && <p>Something went wrong...</p>}
+    <h1 className="d-flex justify-content-center align-self-baseline">
+      Enye records</h1>
+    <InputWithLabel id="search" label="Search" value={searchTerm} onInputChange={handleSearch} setFilter={setFilter} filter={filter}/>
+    <br/> {profiles.isError && <p>Something went wrong...</p>}
     {
       profiles.isLoading
         ? (<p>Loading ...</p>)
-        : (<TableGrid data={searchedProfiles}/>)
+        : (<TableGrid data={searchedProfiles} />)
     }
   </div>)
 }
