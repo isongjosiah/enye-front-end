@@ -26,7 +26,7 @@ const InputWithLabel = ({
 />
 <InputGroup.Append>
   <Button variant="outline-primary" className = {filter === "Name"?"active":""} onClick= {()=> setFilter("Name")}>Name</Button>
-  <Button variant="outline-primary" className = {filter === "Payement"?"active":""} onClick= {() => setFilter("Payement")}>Payement method</Button>
+  <Button variant="outline-primary" className = {filter === "Payement"?"active":""} onClick= {() => setFilter("Payement")}>Payment method</Button>
 </InputGroup.Append>
 </InputGroup>
   </div>
