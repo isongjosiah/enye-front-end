@@ -18,8 +18,8 @@ const InputWithLabel = ({
   <div className="container mt-4">
   <InputGroup>
 <FormControl
-  placeholder="Search"
-  aria-label="Search"
+  placeholder="Search by..."
+  aria-label="Search by..."
   aria-describedby="basic-addon2"
   onChange = {onInputChange}
   value = {value}

@@ -4,6 +4,8 @@ import axios from 'axios'
 import {InputWithLabel} from "./components/inputwithlabel"
 import {TableGrid} from "./components/table"
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'open-iconic/font/css/open-iconic-bootstrap.css'
+import {Spinner} from "react-bootstrap"
 
 const API_ENDPOINT = "https://api.enye.tech/v1/challenge/records"
 
@@ -89,14 +91,26 @@ const App = () => {
   })
 
   return (<div>
-    <h1 className="d-flex justify-content-center align-self-baseline">
+    <h1 className="d-flex justify-content-center align-self-baseline" style={{
+        "font-family" : "Yusei Magic"
+      }}>
       Enye records</h1>
     <InputWithLabel id="search" label="Search" value={searchTerm} onInputChange={handleSearch} setFilter={setFilter} filter={filter}/>
-    <br/> {profiles.isError && <p>Something went wrong...</p>}
+    <br/> {
+      profiles.isError && <p className="d-flex justify-content-center align-self-baseline">
+          <span className="oi oi-warning" style={{
+              "fill" : "#FF0000"
+            }} title="x" aria-hidden="true"></span>
+          Error fetching data. Please check you Internet Connection</p>
+    }
     {
       profiles.isLoading
-        ? (<p>Loading ...</p>)
-        : (<TableGrid data={searchedProfiles} />)
+        ? (<div className="d-flex justify-content-center align-self-baseline">
+          <Spinner animation="grow" role="status" variant="primary">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>)
+        : (<TableGrid data={searchedProfiles}/>)
     }
   </div>)
 }

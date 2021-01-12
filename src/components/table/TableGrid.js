@@ -2,7 +2,7 @@
 import React, {
   useState
 } from 'react'
-import { PagingState, IntegratedPaging,} from '@devexpress/dx-react-grid'
+import { PagingState, IntegratedPaging, SortingState, IntegratedSorting} from '@devexpress/dx-react-grid'
 import {
   Grid,
   VirtualTable,
@@ -12,6 +12,9 @@ import {
 } from '@devexpress/dx-react-grid-bootstrap4'
 import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-bootstrap'
+import 'open-iconic/font/css/open-iconic-bootstrap.css'
+
 
 
 // List component would eventually take care of displaying the information obtained from the API
@@ -157,10 +160,12 @@ const TableGrid = ({
 
           <div className="card">
             <Grid rows={row} columns={columns}>
+              <SortingState defaultSorting={[{columnName:'FirstName', direction:'asc'}]}/>
+              <IntegratedSorting />
               <PagingState currentPage={currentPage} onCurrentPageChange={setCurrentPage} pageSize={pageSize} onPageSizeChange={setPageSize}/>
               <IntegratedPaging />
-              <VirtualTable columnExtensions={colext}/>
-              <TableHeaderRow />
+              <VirtualTable height= {"100%"} columnExtensions={colext}/>
+              <TableHeaderRow showSortingControls={true} />
               <TableFixedColumns
                 leftColumns={leftcol}
               />
