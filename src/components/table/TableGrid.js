@@ -2,15 +2,19 @@
 import React, {
   useState
 } from 'react'
-import Paper from "@material-ui/core/Paper"
-import { PagingState, IntegratedPaging,} from '@devexpress/dx-react-grid'
+import { PagingState, IntegratedPaging, SortingState, IntegratedSorting} from '@devexpress/dx-react-grid'
 import {
   Grid,
-  Table,
+  VirtualTable,
   TableHeaderRow,
   TableFixedColumns,
   PagingPanel,
-} from '@devexpress/dx-react-grid-material-ui'
+} from '@devexpress/dx-react-grid-bootstrap4'
+import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-bootstrap'
+import 'open-iconic/font/css/open-iconic-bootstrap.css'
+
 
 
 // List component would eventually take care of displaying the information obtained from the API
@@ -112,6 +116,7 @@ const TableGrid = ({
       width: 130
     }, {
       name: 'PaymentMethod',
+      align: 'right',
       width: 160
     }])
 
@@ -152,30 +157,21 @@ const TableGrid = ({
 
       }) => {
         return (
-          // DataGrid method
-          // < div style = {
-          //   {
-          //     height: 900,
-          //     width: '100%'
-          //   }
-          // } >
-          // <DataGrid rows={row} columns={columns} pageSize={pageSize}/>
-          //
-          // <
-          // /div>
 
-          <Paper>
+          <div className="card">
             <Grid rows={row} columns={columns}>
+              <SortingState defaultSorting={[{columnName:'FirstName', direction:'asc'}]}/>
+              <IntegratedSorting />
               <PagingState currentPage={currentPage} onCurrentPageChange={setCurrentPage} pageSize={pageSize} onPageSizeChange={setPageSize}/>
               <IntegratedPaging />
-              <Table columnExtensions={colext}/>
-              <TableHeaderRow />
+              <VirtualTable height= {"100%"} columnExtensions={colext}/>
+              <TableHeaderRow showSortingControls={true} />
               <TableFixedColumns
                 leftColumns={leftcol}
               />
               <PagingPanel pageSizes={pageSizes}/>
             </Grid>
-          </Paper>
+          </div>
         )
 
         }
