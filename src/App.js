@@ -60,8 +60,6 @@ const App = () => {
     data: [],
     isLoading: false,
     isError: false,
-    isName: true,
-    isPayment: false
   })
 
   React.useEffect(() => {

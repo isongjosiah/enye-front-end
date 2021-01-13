@@ -11,7 +11,6 @@ const InputWithLabel = ({
   value,
   onInputChange,
   setFilter,
-  isFocused,
   filter
 }) => {
   return(
@@ -23,6 +22,7 @@ const InputWithLabel = ({
   aria-describedby="basic-addon2"
   onChange = {onInputChange}
   value = {value}
+  autoFocus={true}
 />
 <InputGroup.Append>
   <Button variant="outline-primary" className = {filter === "Name"?"active":""} onClick= {()=> setFilter("Name")}>Name</Button>
