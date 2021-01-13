@@ -160,7 +160,7 @@ const TableGrid = ({
 
           <div className="card">
             <Grid rows={row} columns={columns}>
-              <SortingState defaultSorting={[{columnName:'FirstName', direction:'asc'}]}/>
+              <SortingState defaultSorting={[{columnName:'id', direction:'asc'}]}/>
               <IntegratedSorting />
               <PagingState currentPage={currentPage} onCurrentPageChange={setCurrentPage} pageSize={pageSize} onPageSizeChange={setPageSize}/>
               <IntegratedPaging />
